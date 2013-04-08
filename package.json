@@ -1,0 +1,19 @@
+{
+  "author": "Carl Sutherland",
+  "name": "fetchjs",
+  "main": "bin/server",
+  "private": true,
+  "description": "FetchJS: API prototyping and specification tool.",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "chai": "1.5.x",
+    "chai-http": "0.3.x",
+    "commander": "1.1.x",
+    "express": "3.0.x",
+    "forever-monitor": "1.1.0",
+    "mocha": "1.8.x",
+    "superagent": "0.14.x",
+    "underscore": "1.4.x"
+  }
+}

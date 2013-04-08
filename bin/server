@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+var
+  program = require('commander'),
+  _ = require('underscore'),
+  fs = require('fs'),
+  server = require('../lib/server'),
+  forever = require('forever-monitor');
+
+// CLI
+program
+  .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
+  .usage('[options] [files]')
+  .option('-l, --latency <latency>', 'target latency', 50)
+  .option('-p, --port <port>', 'port to listen on', 3000)
+  .option('--no-watch', 'do not watch')
+  .parse(process.argv);
+
+// Run:
+var
+  options = {
+    port : program.port,
+    latency : program.latency,
+    path : program.args[0] || process.cwd() + '/routes'
+  };
+
+if (program.watch) {
+  // If watching spawn forever with --no-watch
+  var
+    args = process.argv.slice(0),
+    child;
+  args.push('--no-watch');
+  start();
+  fs.watch('./routes', _.debounce(function () {
+    if (child) child.stop();
+    start();
+  }, 10));
+  function start () {
+    child = forever.start(args, {
+    });
+  }
+} else {
+  // If not watching start the server
+  server(options);
+}

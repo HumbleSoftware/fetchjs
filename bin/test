@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+// dependencies
+var
+  fs = require('fs'),
+  program = require('commander'),
+  spec = require('../lib/spec');
+
+// CLI
+program
+  .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
+  .usage('[options] [url] [files]')
+  .option('-R, --reporter <name>', 'mocha reporter', 'spec')
+  .parse(process.argv);
+
+var
+  url = program.args[0],
+  files = program.args[1];
+
+if (/^http(s){0,1}:\/\//i.test(url)) {
+  url = url;
+} else {
+  files = url;
+}
+
+var
+  options = {
+    base : url || 'http://localhost:3000',
+    reporter : program.reporter,
+    path : files || process.cwd() + '/spec'
+  };
+
+spec(options);
