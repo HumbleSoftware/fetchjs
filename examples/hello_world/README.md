@@ -9,19 +9,19 @@ The server runs on port 3000 by default.  To change this, use the `-p` flag:
 ./test http://localhost:3001/
 ```
 
-## `./server`
+## ./server
 
 `./server` starts the server defined in `routes`.  Execute `./server --help` for a full set of arguments.
 
-## `./test`
-
-To run this demo, execute `./server` to start the server.  `./server --help` for a full set of arguments.
-
-## `routes`
+### routes
 
 Defines the server.  Here, we have one route `/` which serves "Hello World!".
 
-## `spec`
+## ./test
+
+To run this demo, execute `./server` to start the server.  `./server --help` for a full set of arguments.
+
+### spec
 
 Defines the specification to test the API.  This is one test, ensuring a GET to `http://localhost:3000/` returns 'Hello World!'.
 
