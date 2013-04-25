@@ -11,6 +11,7 @@ program
   .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
   .usage('[options] [url] [files]')
   .option('-R, --reporter <name>', 'mocha reporter', 'spec')
+  .option('-g, --grep <name>', 'mocha grep', '')
   .parse(process.argv);
 
 var
@@ -27,7 +28,8 @@ var
   options = {
     base : url || 'http://localhost:3000',
     reporter : program.reporter,
-    path : files || process.cwd() + '/spec'
+    path : files || process.cwd() + '/spec',
+    grep : program.grep
   };
 
 spec(options);
