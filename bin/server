@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var
+  readline = require('readline'),
   program = require('commander'),
   _ = require('underscore'),
   fs = require('fs'),
@@ -38,6 +39,7 @@ if (program.watch) {
   function start () {
     child = forever.start(args, {
     });
+    process.stdin.pipe(child.child.stdio[0]);
   }
 } else {
   // If not watching start the server
