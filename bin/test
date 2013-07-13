@@ -4,6 +4,10 @@
 var
   fs = require('fs'),
   program = require('commander'),
+  _ = require('underscore'),
+  watch = require('node-watch'),
+  forever = require('forever-monitor'),
+  spawn = require('child_process').spawn,
   spec = require('../lib/spec');
 
 // CLI
@@ -12,6 +16,7 @@ program
   .usage('[options] [url] [files]')
   .option('-R, --reporter <name>', 'mocha reporter', 'spec')
   .option('-g, --grep <name>', 'mocha grep', '')
+  .option('-w, --watch', 'watch for changes')
   .parse(process.argv);
 
 var
@@ -32,4 +37,32 @@ var
     grep : program.grep
   };
 
-spec(options);
+if (program.watch) {
+
+  var
+    args = _.without(process.argv, '-w', '--watch'),
+    program = args.shift(),
+    child;
+
+  start();
+  watch(
+    files || process.cwd(),
+//    options.path,
+    {
+      followSymLinks : true
+    },
+    _.debounce(function () {
+      if (child) child.kill();
+      start();
+    }, 10)
+  );
+  function start () {
+    child = spawn(program, args);
+    process.stdin.pipe(child.stdio[0]);
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+  }
+} else {
+  // Not watching execute command
+  spec(options);
+}

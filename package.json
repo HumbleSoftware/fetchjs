@@ -16,6 +16,7 @@
     "superagent": "0.14.x",
     "underscore": "1.4.x",
     "colors": "0.6.0-1",
-    "charm": "0.1.2"
+    "charm": "0.1.2",
+    "node-watch": "0.3.x"
   }
 }

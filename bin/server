@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 var
-  readline = require('readline'),
+  fs = require('fs'),
   program = require('commander'),
   _ = require('underscore'),
-  fs = require('fs'),
-  server = require('../lib/server'),
-  forever = require('forever-monitor');
+  watch = require('node-watch'),
+  forever = require('forever-monitor'),
+  server = require('../lib/server');
 
 // CLI
 program
@@ -14,31 +14,40 @@ program
   .usage('[options] [files]')
   .option('-l, --latency <latency>', 'target latency', 50)
   .option('-p, --port <port>', 'port to listen on', 3000)
-  .option('--no-watch', 'do not watch')
+  .option('-w, --watch', 'watch for changes')
   .parse(process.argv);
 
 // Run:
 var
+  base = program.args[0] || process.cwd(),
+  path = base + '/routes',
   options = {
     port : program.port,
     latency : program.latency,
-    path : program.args[0] || process.cwd() + '/routes'
+    path : path
   };
 
 if (program.watch) {
-  // If watching spawn forever with --no-watch
+
+  // Recurse without watch:
+
   var
-    args = process.argv.slice(0),
+    args = _.without(process.argv, '-w', '--watch'),
     child;
-  args.push('--no-watch');
+
   start();
-  fs.watch('./routes', _.debounce(function () {
-    if (child) child.stop();
-    start();
-  }, 10));
+  watch(
+    base,
+    {
+      followSymLinks : true
+    },
+    _.debounce(function () {
+      if (child) child.stop();
+      start();
+    }, 10)
+  );
   function start () {
-    child = forever.start(args, {
-    });
+    child = forever.start(args, {});
     process.stdin.pipe(child.child.stdio[0]);
   }
 } else {
