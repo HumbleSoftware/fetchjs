@@ -1,6 +1,6 @@
 {
   "author": "Carl Sutherland",
-  "name": "fetchjs",
+  "name": "fetch-cli",
   "main": "./lib/index",
   "description": "FetchJS: API prototyping and specification tool.",
   "version": "0.0.1",
