@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var program = require('commander');
+var spawn = require('child_process').spawn;
+var fetchServer = require('./server');
+var fetchTest = require('./test');
+
+program
+  .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version);
+
+program
+  .command('server')
+  .usage('[options] [files]')
+  .option('-l, --latency <latency>', 'target latency', 50)
+  .option('-p, --port <port>', 'port to listen on', 3000)
+  .option('-w, --watch', 'watch for changes')
+  .action(fetchServer);
+
+program
+  .command('test <url>')
+  .usage('[options] <url>')
+  .option('-R, --reporter <name>', 'mocha reporter', 'spec')
+  .option('-g, --grep <name>', 'mocha grep', '')
+  .option('-w, --watch', 'watch for changes')
+  .option('-s, --spec <files>', 'spec files')
+  .action(fetchTest);
+
+program.parse(process.argv);
