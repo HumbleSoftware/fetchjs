@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="FetchJS static client-side api example.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FetchJS | Examples | 03 - Static Client API</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="http://localhost:3002"></script>
+    <script>
+      // The static script exposes a method which returns a request function.
+      var request = fetch();
+      // Send a request like so:
+      request('GET', '/', function (err, res, body) {
+        console.log(res);
+        console.log(body);
+      });
+    </script>
+  </body>
+</html>

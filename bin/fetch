@@ -26,4 +26,10 @@ program
   .option('-s, --spec <files>', 'spec files')
   .action(fetchTest);
 
+program
+  .command('static')
+  .usage('[options] [files]')
+  .option('-p, --port <port>', 'port to listen on', 3000)
+  .action(require('../lib/static'));
+
 program.parse(process.argv);

@@ -2,7 +2,6 @@
   "author": "Carl Sutherland",
   "name": "fetchjs",
   "main": "./lib/index",
-  "private": true,
   "description": "FetchJS: API prototyping and specification tool.",
   "version": "0.0.1",
   "private": true,
@@ -10,6 +9,8 @@
     "fetch": "bin/fetch"
   },
   "dependencies": {
+    "browserify": "3.18.x",
+    "ghosttrain": "0.0.x",
     "chai": "1.5.x",
     "chai-http": "0.3.x",
     "commander": "2.1.x",
