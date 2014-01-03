@@ -4,7 +4,6 @@
   "main": "./lib/index",
   "description": "FetchJS: API prototyping and specification tool.",
   "version": "0.0.1",
-  "private": true,
   "bin": {
     "fetch": "bin/fetch"
   },
