@@ -5,6 +5,7 @@ var program = require('commander');
 var spawn = require('child_process').spawn;
 var fetchServer = require('./server');
 var fetchTest = require('./test');
+var fetchBuild = require('./build');
 
 program
   .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version);
@@ -15,6 +16,7 @@ program
   .option('-l, --latency <latency>', 'target latency', 50)
   .option('-p, --port <port>', 'port to listen on', 3000)
   .option('-w, --watch', 'watch for changes')
+  .option('--static', 'serve the API as a static client-side build at /')
   .action(fetchServer);
 
 program
@@ -27,9 +29,11 @@ program
   .action(fetchTest);
 
 program
-  .command('static')
-  .usage('[options] [files]')
-  .option('-p, --port <port>', 'port to listen on', 3000)
-  .action(require('../lib/static'));
+  .command('build')
+  .usage('[options]')
+  .option('-m, --mocks <path>', 'location of the data mocks', 'mocks')
+  .option('-r, --routes <path>', 'location of the routes', 'routes')
+  .option('-o, --output <path>', 'build output location', 'static-build.js')
+  .action(fetchBuild);
 
 program.parse(process.argv);

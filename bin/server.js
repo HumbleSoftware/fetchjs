@@ -16,6 +16,7 @@ module.exports = function (path, program) {
     options = {
       port : program.port,
       latency : program.latency,
+      static : program.static,
       path : path
     };
 
