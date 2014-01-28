@@ -3,7 +3,7 @@
   "name": "fetch-cli",
   "main": "./lib/index",
   "description": "FetchJS: API prototyping and specification tool.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "fetch": "bin/fetch"
   },
